@@ -1,0 +1,7 @@
+CREATE TABLE room (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    roomNumber VARCHAR(10) NOT NULL UNIQUE,
+    capacity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    available BOOLEAN NOT NULL
+);
