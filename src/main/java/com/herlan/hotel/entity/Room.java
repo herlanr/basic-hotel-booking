@@ -55,7 +55,7 @@ public class Room {
 	
 	private Boolean available;
 
-	public void update(@Valid UpdateRoomDTO updateRoomDTO) {
+	public void update(UpdateRoomDTO updateRoomDTO) {
 		if (updateRoomDTO.getRoomNumber() != null) {
 			this.roomNumber = updateRoomDTO.getRoomNumber();
 		}

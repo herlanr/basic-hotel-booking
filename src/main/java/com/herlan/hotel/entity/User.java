@@ -1,5 +1,8 @@
 package com.herlan.hotel.entity;
 
+import com.herlan.hotel.dto.NewUserDTO;
+import com.herlan.hotel.dto.UpdatedUserDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,4 +45,17 @@ public class User {
 	@NotBlank
 	private String password;
 	
+	public User(NewUserDTO dados) {
+		this.firstName = dados.getFirstName();
+		this.lastName = dados.getLastName();
+		this.email = dados.getEmail();
+		this.password = dados.getPassword();
+	}
+	
+	public void update(UpdatedUserDTO dados) {
+		this.email = dados.getEmail();
+	}
+
 }
+
+	
