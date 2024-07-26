@@ -25,11 +25,4 @@ public class NewRoomDTO {
 	 private BigDecimal price;
 	 private Boolean available;
 	 
-	 
-	 public NewRoomDTO(Room room) {
-		 this(room.getId(), room.getRoomNumber(), room.getCapacity(), 
-				 room.getPrice(), room.getAvailable());
-	 }
-	 
-
 }
