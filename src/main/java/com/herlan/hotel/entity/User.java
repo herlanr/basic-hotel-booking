@@ -56,6 +56,10 @@ public class User {
 		this.email = dados.getEmail();
 	}
 
+	public User(Long id) {
+		this.id = id;
+	}
+
 }
 
 	

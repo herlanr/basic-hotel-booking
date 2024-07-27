@@ -2,6 +2,8 @@ package com.herlan.hotel.entity;
 
 import java.time.LocalDate;
 
+import com.herlan.hotel.dto.NewBookingDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,5 +50,12 @@ public class Booking {
 	@OneToOne
 	@JoinColumn(name = "roomId")
 	private Room room;
+	
+    public Booking(NewBookingDTO dados) {
+        this.checkIn = dados.getCheckIn();
+        this.checkOut = dados.getCheckOut();
+        this.user = new User(dados.getUser());  // Aqui você cria uma instância User com o ID
+        this.room = new Room(dados.getRoom());  // Aqui você cria uma instância Room com o ID
+    }	
 	
 }

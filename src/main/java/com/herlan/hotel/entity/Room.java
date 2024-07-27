@@ -1,16 +1,13 @@
 package com.herlan.hotel.entity;
 
 import java.math.BigDecimal;
-
 import com.herlan.hotel.dto.NewRoomDTO;
 import com.herlan.hotel.dto.UpdateRoomDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -71,6 +68,10 @@ public class Room {
 		if (updateRoomDTO.getAvailable() != null) {
 			this.available = updateRoomDTO.getAvailable();
 		}		
+	}
+
+	public Room(Long id) {
+		this.id = id;
 	}
 
 }
