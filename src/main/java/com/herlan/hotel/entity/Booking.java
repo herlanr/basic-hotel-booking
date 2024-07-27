@@ -54,8 +54,8 @@ public class Booking {
     public Booking(NewBookingDTO dados) {
         this.checkIn = dados.getCheckIn();
         this.checkOut = dados.getCheckOut();
-        this.user = new User(dados.getUser());  // Aqui você cria uma instância User com o ID
-        this.room = new Room(dados.getRoom());  // Aqui você cria uma instância Room com o ID
+        this.user = new User(dados.getUser());   // Creating new instance only with ID
+        this.room = new Room(dados.getRoom());  // Creating new instance only with ID
     }	
 	
 }
