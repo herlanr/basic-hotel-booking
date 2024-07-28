@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quartos Disponíveis</title>
     <link rel="stylesheet" href="/css/rooms.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <div class="rooms-container">
@@ -25,13 +27,67 @@
                             <h2>Quarto ${room.roomNumber}</h2>
                             <p>Capacidade: ${room.capacity}</p>
                             <p>Preço: R$ ${room.price}</p>
-                            <p>Disponível: ${room.available ? "Sim" : "Não"}</p>
+                            <button onclick="checkAvailability(${room.id})">Verificar Disponibilidade</button>
                         `;
                         roomsList.appendChild(roomElement);
                     });
                 })
                 .catch(error => console.error('Erro ao buscar quartos:', error));
         });
+
+        function checkAvailability(roomId) {
+            fetch(`/booking/unavailableDates?roomId=${roomId}`)
+                .then(response => response.json())
+                .then(unavailableDates => {
+                    const checkInInput = document.createElement("input");
+                    const checkOutInput = document.createElement("input");
+
+                    checkInInput.setAttribute("placeholder", "Data de check-in");
+                    checkOutInput.setAttribute("placeholder", "Data de check-out");
+
+                    document.body.appendChild(checkInInput);
+                    document.body.appendChild(checkOutInput);
+
+                    flatpickr(checkInInput, {
+                        minDate: "today",
+                        dateFormat: "Y-m-d",
+                        disable: unavailableDates,
+                        onChange: function(selectedDates, dateStr, instance) {
+                            checkOutInput._flatpickr.set("minDate", dateStr);
+                        }
+                    });
+
+                    flatpickr(checkOutInput, {
+                        minDate: "today",
+                        dateFormat: "Y-m-d",
+                        disable: unavailableDates
+                    });
+
+                    const confirmButton = document.createElement("button");
+                    confirmButton.innerText = "Confirmar";
+                    confirmButton.addEventListener("click", () => {
+                        const checkIn = checkInInput.value;
+                        const checkOut = checkOutInput.value;
+
+                        fetch(`/booking/checkAvailability?roomId=${roomId}&checkIn=${checkIn}&checkOut=${checkOut}`)
+                            .then(response => response.json())
+                            .then(isAvailable => {
+                                if (isAvailable) {
+                                    alert("O quarto está disponível!");
+                                } else {
+                                    alert("O quarto não está disponível nas datas selecionadas.");
+                                }
+                                document.body.removeChild(checkInInput);
+                                document.body.removeChild(checkOutInput);
+                                document.body.removeChild(confirmButton);
+                            })
+                            .catch(error => console.error('Erro ao verificar disponibilidade:', error));
+                    });
+
+                    document.body.appendChild(confirmButton);
+                })
+                .catch(error => console.error('Erro ao buscar datas indisponíveis:', error));
+        }
     </script>
 </body>
 </html>

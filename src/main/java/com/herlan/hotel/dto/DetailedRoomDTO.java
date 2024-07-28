@@ -14,11 +14,10 @@ public class DetailedRoomDTO {
 	 private String roomNumber;
 	 private Integer capacity;
 	 private BigDecimal price;
-	 private Boolean available;
 
 	 public DetailedRoomDTO(Room room) {
 		 this(room.getId(), room.getRoomNumber(), room.getCapacity(), 
-				 room.getPrice(), room.getAvailable());
+				 room.getPrice());
 	 }
 	 
 }
