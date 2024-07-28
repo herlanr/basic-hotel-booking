@@ -3,6 +3,8 @@ package com.herlan.hotel.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +32,12 @@ public class UserController {
 		return repository.findAll().stream().map(SimplifiedUsersDTO::new).toList();
 	}
 	
-	@PostMapping
-	@Transactional
-	public void create(@RequestBody @Valid NewUserDTO dados) {
-		repository.save(new User(dados));
-	}	
+    @PostMapping
+    @Transactional
+    public ResponseEntity<Void> create(@RequestBody @Valid NewUserDTO dados) {
+        repository.save(new User(dados));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }   
 	
 	@PutMapping
 	@Transactional
@@ -50,9 +53,6 @@ public class UserController {
 		
 		return SimplifiedUsersDTO;
 	}
-
-	
-	
 	
 }
 

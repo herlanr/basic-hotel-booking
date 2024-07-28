@@ -1,11 +1,8 @@
 package com.herlan.hotel.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import com.herlan.hotel.dto.NewBookingDTO;
 import com.herlan.hotel.entity.Booking;
 import com.herlan.hotel.repository.BookingRepository;
 
@@ -22,7 +19,4 @@ public class BookingService {
 		
 		return bookings.isEmpty();	
 	}
-	
-	
-
 }

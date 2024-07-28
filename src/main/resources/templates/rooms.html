@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quartos Disponíveis</title>
+    <link rel="stylesheet" href="/css/rooms.css">
+</head>
+<body>
+    <div class="rooms-container">
+        <h1>Quartos Disponíveis</h1>
+        <div id="rooms-list"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("/room")
+                .then(response => response.json())
+                .then(data => {
+                    const roomsList = document.getElementById("rooms-list");
+                    data.forEach(room => {
+                        const roomElement = document.createElement("div");
+                        roomElement.className = "room";
+                        roomElement.innerHTML = `
+                            <h2>Quarto ${room.roomNumber}</h2>
+                            <p>Capacidade: ${room.capacity}</p>
+                            <p>Preço: R$ ${room.price}</p>
+                            <p>Disponível: ${room.available ? "Sim" : "Não"}</p>
+                        `;
+                        roomsList.appendChild(roomElement);
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar quartos:', error));
+        });
+    </script>
+</body>
+</html>
